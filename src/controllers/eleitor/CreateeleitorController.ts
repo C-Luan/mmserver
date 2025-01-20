@@ -4,6 +4,9 @@ import { prismaClient } from "../../database/prismaClient";
 interface Contato {
     candidatoUuid: string
     nomeCompleto: string,
+    cpf: string,
+    rg:string,
+    nomeMae:string,
     dataNascimento: string,
     celular: string,
     email: string,
@@ -31,7 +34,7 @@ function converterParaData(dataString: string) {
 }
 export class CreateEleitorController {
     async createEleitor(req: Request, res: Response) {
-        const { usuario, EnderecoEleitor,nomeMae, MidiasSociaisEleitor, contatoEleitor, DadosPessoaisEleitor, nomeCompleto, dataNascimento, sessaoEleitoral, candidatoUuid, sessao, zona, localdevotacao, email, celular, instagram, facebook, twitter, tiktok, endereco, complemento, cidade, codIbge, bairro, pais, uf, latitude, longitude } = req.body
+        const { usuario, EnderecoEleitor,nomeMae,cpf,rg, MidiasSociaisEleitor, contatoEleitor, DadosPessoaisEleitor, nomeCompleto, dataNascimento, sessaoEleitoral, candidatoUuid, sessao, zona, localdevotacao, email, celular, instagram, facebook, twitter, tiktok, endereco, complemento, cidade, codIbge, bairro, pais, uf, latitude, longitude } = req.body
         try {
             const candidato = await prismaClient.candidato.findUnique({
                 where: {
@@ -49,6 +52,8 @@ export class CreateEleitorController {
                 data: {
                     nomeCompleto: nomeCompleto,
                     nomeMae: nomeMae,
+                    cpf:cpf,
+                    rg:rg,
                     dataNascimento: aniversario,
                     candidatoUuid: candidatoUuid,
                     usuarioUuid: usuario,
@@ -95,6 +100,8 @@ export class CreateEleitorController {
                         nomeCompleto: element.nomeCompleto,
                         dataNascimento: element.dataNascimento == '' ? null : converterParaData(element.dataNascimento),
                         candidatoUuid:candidatoUuid,
+                        cpf:element.cpf,
+                        rg:element.rg,
                         usuarioUuid: element.coordenador,
                         EnderecoEleitor: {
                             create: {

@@ -161,8 +161,8 @@ export class ReadEleitorController {
                     }
                 })
 
-                var eleitores = eleitores.filter(e => e.usuarioUuid === usuario.uuid || e.criado_por?.coordenador === usuario.uuid
-                )
+                // var eleitores = eleitores.filter(e => e.usuarioUuid === usuario.uuid || e.criado_por?.coordenador === usuario.uuid
+                // )
 
                 return res.status(200).json({ eleitores })
             }
@@ -262,9 +262,7 @@ export class ReadEleitorController {
                       },
                     where: {
                         candidatoUuid: uuid,
-                        criado_por: {
-                            coordenador: usuario.uuid
-                        }
+                       
                     },
                     include: {
                         criado_por: {

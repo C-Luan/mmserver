@@ -46,8 +46,6 @@ model ContatoCandidato {
   email       String
 }
 
-
-
 model tipoAtendimento {
   id          Int           @id @default(autoincrement())
   descricao   String
@@ -55,19 +53,19 @@ model tipoAtendimento {
 }
 
 model atendimento {
-  uuid              String   @id @default(uuid())
-  eleitorUuid       String
-  usuarioUuid       String //Usuario que criou o atendimento
-  responsavelUuid   String // Usuário responsável pelo atendimento
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
-  statusAtendimento Int
-  tipoAtendimento   Int?
+  uuid            String    @id @default(uuid())
+  eleitorUuid     String
+  usuarioUuid     String //Usuario que criou o atendimento
+  responsavelUuid String // Usuário responsável pelo atendimento
+  created_at      DateTime  @default(now())
+  updated_at      DateTime? @updatedAt
+  tipoAtendimento Int?
+  descricao       String?
 
-  criado_por  Usuario           @relation("criadorAtendimento", fields: [usuarioUuid], references: [uuid])
-  responsavel Usuario           @relation("responsavelAtendimento", fields: [responsavelUuid], references: [uuid])
-  eleitor     Eleitor           @relation(fields: [eleitorUuid], references: [uuid], onDelete: Cascade)
-  atendimento tipoAtendimento?  @relation(fields: [tipoAtendimento], references: [id])
+  criado_por  Usuario          @relation("criadorAtendimento", fields: [usuarioUuid], references: [uuid])
+  responsavel Usuario          @relation("responsavelAtendimento", fields: [responsavelUuid], references: [uuid])
+  eleitor     Eleitor          @relation(fields: [eleitorUuid], references: [uuid], onDelete: Cascade)
+  atendimento tipoAtendimento? @relation(fields: [tipoAtendimento], references: [id])
 }
 
 model demandaAtendimento {
@@ -81,6 +79,8 @@ model Eleitor {
   uuid            String    @id @default(uuid())
   nomeCompleto    String
   nomeMae         String    @default("")
+  cpf             String
+  rg              String
   coligacaoUuid   String?
   dataNascimento  DateTime?
   indicadopor     String    @default("")
@@ -282,7 +282,6 @@ model Usuario {
   apelido                 String?
   isAtivo                 Boolean  @default(true)
   uuidCandidato           String
-  coordenador             String?
   created_at              DateTime @default(now())
   updated_at              DateTime @updatedAt
   perfil                  Int

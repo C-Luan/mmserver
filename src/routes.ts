@@ -21,6 +21,10 @@ import { CreateCandidatoEleicao } from "./controllers/candidatos_eleicao/createc
 import { CreateVotosLocaisVotacao } from "./controllers/votos_locais_votacao.dart/CreateVotosLocaisVotacao";
 import { ReadVotosLocaisVotacao } from "./controllers/votos_locais_votacao.dart/ReadVotosLocaisVotacal";
 import { Readufcontroller } from "./controllers/UF/ReadUfController";
+import { CreateAtendimentoController } from "./controllers/atendimento/createatendimentocontroller";
+import { ReadAtendimentoController } from "./controllers/atendimento/readatendimenotcontroller";
+import { UpdateTarefasController as UpdateAtendimentoController } from "./controllers/atendimento/updateatendimentocontroller";
+import { DeleteTarefasController as DeleteAtendimentoController } from "./controllers/atendimento/deleteatendimentocontroller";
 
 const router = Router()
 
@@ -93,4 +97,17 @@ router.delete("/deleteanyeleitor", deleteEletor.deleteVarios)
 //dashboard
 const readDashboart = new HomeScreenController
 router.get("/readhomedashboard", readDashboart.readHomeScreen)
+
+// atendimento
+
+const createAtendimento = new CreateAtendimentoController
+const readAtendimento = new ReadAtendimentoController
+const updateAtendimento = new UpdateAtendimentoController
+const deleteAtendimento = new DeleteAtendimentoController
+router.post("/createatendimento", createAtendimento.handle)
+router.get("/readAtendimentosEleitor", readAtendimento.readAtendimentosEleitor)
+router.put("/updateAtendimentoEleitor", updateAtendimento.updateTarefa)
+router.delete("/deleteAtendimentoEleitor", deleteAtendimento.deleteTarefa)
+
+
 export { router }
