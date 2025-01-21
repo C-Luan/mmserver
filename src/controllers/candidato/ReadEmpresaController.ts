@@ -7,19 +7,19 @@ export class ReadEmpresaController {
 
     try {
 
-      const empresas = await prismaClient.candidato.findMany({
+      const candidatos = await prismaClient.candidato.findMany({
         select: {
           uuid: true,
           nomeCandidato: true,
         }
       })
 
-      return res.status(200).json(empresas)
+      return res.status(200).json(candidatos)
 
     } catch (error) {
       return res.status(500).json({
         error: error,
-        message: 'Erro ao procurar colaboradores'
+        message: 'Erro ao procurar Candidatos'
       })
     }
   }

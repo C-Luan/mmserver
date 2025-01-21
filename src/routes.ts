@@ -3,7 +3,7 @@ import { AuthColaboradorController } from './controllers/auth/AuthController';
 import { AuthMiddleware } from './middlewares/auth';
 import { UpdateLoginController } from './controllers/auth/UpdateLoginController';
 import { Logout } from './controllers/auth/Logout';
-import { ReadEmpresaController } from "./controllers/candidato/ReadEmpresaController";
+import { ReadEmpresaController as ReadCandidatosController } from "./controllers/candidato/ReadEmpresaController";
 import { CreateEmpresaController } from "./controllers/candidato/CreateEmpresaController";
 import { ReadUserController } from "./controllers/usuario/ReadUsuarioController";
 // import { UpdateColaboradorController } from "./controllers/coordenador/UpdateCoordenadorController";
@@ -25,50 +25,47 @@ import { CreateAtendimentoController } from "./controllers/atendimento/createate
 import { ReadAtendimentoController } from "./controllers/atendimento/readatendimenotcontroller";
 import { UpdateTarefasController as UpdateAtendimentoController } from "./controllers/atendimento/updateatendimentocontroller";
 import { DeleteTarefasController as DeleteAtendimentoController } from "./controllers/atendimento/deleteatendimentocontroller";
+import { ReadTipoAtendimento as ReadTipoAtendimentoController } from "./controllers/tipoatendimento/readtipoatendimento";
+import { CreateTipoAtendimento } from "./controllers/tipoatendimento/createtipoatendimento";
+import { UpdateTipoAtendimentoController } from "./controllers/tipoatendimento/updatetipoatendimento";
 
 const router = Router()
 
 
-const createEmpresa = new CreateEmpresaController
+const createCandidato = new CreateEmpresaController
+router.post("/cadastrarcandidato", createCandidato.handle)
 
 const autenticacaoColaborador = new AuthColaboradorController
-const readEmpresa = new ReadEmpresaController
-
 const logout = new Logout
 router.post("/login", autenticacaoColaborador.login)
-router.post("/cadastrarcandidato", createEmpresa.handle)
-const createcandidatoeleicao = new CreateCandidatoEleicao
-router.post("/importanycandidatos", createcandidatoeleicao.createEleitorImportado)
-const createvotacaolocal = new CreateVotosLocaisVotacao
-router.post("/importvotoslocalvotacao", createvotacaolocal.createimportvotoslocalvotacao)
-const readlocaisvotacao = new ReadVotosLocaisVotacao
-router.get("/readvotoscandidato", readlocaisvotacao.readvotos)
+
 //////////////////////////////////////////////////////////////////////////////////////
 router.use(AuthMiddleware)
 
-const createColaborador = new CreateUserController
-const readColaborador = new ReadUserController
-// const updateColaborador = new UpdateColaboradorController
-const deleteColaborador = new DeleteColaboradorController
-const atualizalogin = new UpdateLoginController
-router.post("/createuser", createColaborador.handle)
-router.get("/getEmpresa", readEmpresa.getCandidatos)
-router.get("/getcountusuariodia", readColaborador.cadastroEleitorUsuarioDia)
-router.get("/getcountusuariodiacoordenador", readColaborador.cadastroEleitorUsuarioDiaCoordenador)
-router.get("/usuarioscandidato/:uuid", readColaborador.colaboradoresCandidato)
-router.get("/coordenadorcandidato/:uuid", readColaborador.colaboradoresCandidatoCoordenador)
-router.get("/colaborador/:uuid", readColaborador.colaborador)
 
-// router.put("/atualizarcolaborador/:uuid", updateColaborador.update)
-router.put("/atualizalogin/:colaborador_uuid", atualizalogin.update)
-router.delete("/deletarcolaborador/:uuid", deleteColaborador.delete)
+//login
+const atualizaLogin = new UpdateLoginController
+router.put("/atualizalogin/:colaborador_uuid", atualizaLogin.update)
 router.post("/logout", logout.logout)
+
+//usuario
+const createUsuario = new CreateUserController
+const readUsuario = new ReadUserController
+const deleteUsuario = new DeleteColaboradorController
+
+router.post("/createuser", createUsuario.handle)
+router.get("/getcountusuariodia", readUsuario.cadastroEleitorUsuarioDia)
+router.get("/getcountusuariodiacoordenador", readUsuario.cadastroEleitorUsuarioDiaCoordenador)
+router.get("/usuarioscandidato/:uuid", readUsuario.colaboradoresCandidato)
+router.get("/coordenadorcandidato/:uuid", readUsuario.colaboradoresCandidatoCoordenador)
+router.get("/colaborador/:uuid", readUsuario.colaborador)
+router.delete("/deletarcolaborador/:uuid", deleteUsuario.delete)
+
 //leitura de estados e municipios
 const readuf = new Readufcontroller
 router.get("/readufs", readuf.readmany)
-//candidatos
-const readCandidatos = new ReadEmpresaController
-router.get("/readcandidadoscoligacao", readCandidatos.getCandidatosColigacaoAno)
+
+
 //locais de votacao
 const readLocalVotacao = new Readlocalvotacaocontroller
 const createLocaldeVotacao = new CreateLocalVotacaoController
@@ -109,5 +106,14 @@ router.get("/readAtendimentosEleitor", readAtendimento.readAtendimentosEleitor)
 router.put("/updateAtendimentoEleitor", updateAtendimento.updateTarefa)
 router.delete("/deleteAtendimentoEleitor", deleteAtendimento.deleteTarefa)
 
+//tipo atendimento
+
+const createtipoatendimento = new CreateTipoAtendimento
+const readTipoAtendimento = new ReadTipoAtendimentoController
+const updateTipoAtendimento = new UpdateTipoAtendimentoController
+router.post("/tipo-atendimento", createtipoatendimento.create);
+router.get("/tipo-atendimento", readTipoAtendimento.findAll);
+router.get("/tipo-atendimento/:id", readTipoAtendimento.findOne);
+router.put("/tipo-atendimento/:id", updateTipoAtendimento.update);
 
 export { router }
