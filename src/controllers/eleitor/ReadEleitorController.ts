@@ -8,7 +8,7 @@ export class ReadEleitorController {
             const eleitores = await prismaClient.eleitor.findMany({
                 orderBy: {
                     nomeCompleto: 'asc'
-                  },
+                },
                 where: {
                     usuarioUuid
                 },
@@ -67,11 +67,11 @@ export class ReadEleitorController {
                 return res.status(401).json({ Message: "Usuario nao encontrado" })
             }
             if (usuario.perfil == 5) {
-                
+
                 const eleitores = await prismaClient.eleitor.findMany({
                     orderBy: {
                         nomeCompleto: 'asc'
-                      },
+                    },
                     include: {
                         criado_por: {
                             include: {
@@ -100,7 +100,7 @@ export class ReadEleitorController {
                 const eleitores = await prismaClient.eleitor.findMany({
                     orderBy: {
                         nomeCompleto: 'asc'
-                      },
+                    },
                     where: {
                         coligacao: {
                             usuarioUuid: usuario.uuid,
@@ -132,7 +132,7 @@ export class ReadEleitorController {
                 var eleitores = await prismaClient.eleitor.findMany({
                     orderBy: {
                         nomeCompleto: 'asc'
-                      },
+                    },
                     where: {
                         candidatoUuid: uuid,
 
@@ -170,7 +170,7 @@ export class ReadEleitorController {
                 const eleitores = await prismaClient.eleitor.findMany({
                     orderBy: {
                         nomeCompleto: 'asc'
-                      },
+                    },
                     where: {
                         candidatoUuid: uuid,
                     },
@@ -213,7 +213,7 @@ export class ReadEleitorController {
             const { uuid } = req.params
             const usuariouuid = req.uuid
             const usuario = await prismaClient.usuario.findUnique({
-                
+
                 where: {
                     uuid: usuariouuid
                 }, include: {
@@ -227,7 +227,7 @@ export class ReadEleitorController {
                 const eleitores = await prismaClient.eleitor.findMany({
                     orderBy: {
                         nomeCompleto: 'asc'
-                      },
+                    },
                     where: {
                         coligacao: {
                             usuarioUuid: usuario.uuid,
@@ -259,10 +259,10 @@ export class ReadEleitorController {
                 var eleitores = await prismaClient.eleitor.findMany({
                     orderBy: {
                         nomeCompleto: 'asc'
-                      },
+                    },
                     where: {
                         candidatoUuid: uuid,
-                       
+
                     },
                     include: {
                         criado_por: {
@@ -297,7 +297,7 @@ export class ReadEleitorController {
                 const eleitores = await prismaClient.eleitor.findMany({
                     orderBy: {
                         nomeCompleto: 'asc'
-                      },
+                    },
                     where: {
                         candidatoUuid: uuid,
                     },
@@ -343,7 +343,7 @@ export class ReadEleitorController {
             const eleitores = await prismaClient.eleitor.findMany({
                 orderBy: {
                     nomeCompleto: 'asc'
-                  },
+                },
                 where: {
                     candidatoUuid: uuid,
                 },
@@ -368,6 +368,39 @@ export class ReadEleitorController {
                 error: error,
                 message: 'Falha Interna do Servidor'
             })
+        }
+    }
+    async getAniversariantes(req: Request, res: Response) {
+        const mes = parseInt(req.params.mes, 10); // Obtemos o mês a partir dos parâmetros da URL
+
+        if (isNaN(mes) || mes < 1 || mes > 12) {
+            return res.status(400).json({ error: "O parâmetro 'mes' deve ser um número entre 1 e 12." });
+        }
+
+        try {
+            const aniversariantes = await prismaClient.eleitor.findMany({
+                where: {
+                    dataNascimento: {
+                        not: null,
+                    },
+                },
+                select: {
+                    uuid: true,
+                    nomeCompleto: true,
+                    dataNascimento: true,
+                },
+            });
+
+            // Filtra aniversariantes com base no mês fornecido
+            const aniversariantesDoMes = aniversariantes.filter((eleitor) => {
+                if (!eleitor.dataNascimento) return false;
+                return eleitor.dataNascimento.getMonth() + 1 === mes;
+            });
+
+            res.status(200).json(aniversariantesDoMes);
+        } catch (error) {
+            console.error("Erro ao buscar aniversariantes do mês:", error);
+            res.status(500).json({ error: "Erro ao buscar aniversariantes do mês" });
         }
     }
 }
