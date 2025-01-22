@@ -14,7 +14,6 @@ export class CreateEmpresaController {
         const empresa = await prismaClient.candidato.create({
           data: {
             nomeCandidato: nomeCandidato,
-            
             Usuario: {
               create: {
                 login: {
