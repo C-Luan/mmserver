@@ -57,6 +57,7 @@ model atendimento {
   eleitorUuid     String
   usuarioUuid     String //Usuario que criou o atendimento
   responsavelUuid String // Usuário responsável pelo atendimento
+  custo           Float            @default(0)
   created_at      DateTime         @default(now())
   updated_at      DateTime?        @updatedAt
   tipoAtendimento Int?
@@ -66,7 +67,6 @@ model atendimento {
   eleitor         Eleitor          @relation(fields: [eleitorUuid], references: [uuid], onDelete: Cascade)
   atendimento     tipoAtendimento? @relation(fields: [tipoAtendimento], references: [id])
 }
-
 
 model Eleitor {
   uuid            String    @id @default(uuid())
