@@ -54,7 +54,7 @@ export class UpdateEleitorController {
         }
     }
     async updateeleitor(req: Request, res: Response) {
-        const { uuid,usuario, EnderecoEleitor: EnderecoEleitor,MidiasSociaisEleitor: MidiasSociaisEleitor, contatoEleitor:contatoEleitor, DadosPessoaisEleitor:DadosPessoaisEleitor, nomeCompleto, nomeMae, dataNascimento, sessaoEleitoral, candidatoUuid, sessao, zona, localdevotacao, email, celular, instagram,facebook, twitter, tiktok, endereco, complemento, cidade, codIbge, bairro, pais, uf, latitude, longitude } = req.body
+        const { uuid,usuario,sexo, EnderecoEleitor: EnderecoEleitor,MidiasSociaisEleitor: MidiasSociaisEleitor, contatoEleitor:contatoEleitor, DadosPessoaisEleitor:DadosPessoaisEleitor, nomeCompleto, nomeMae, dataNascimento, sessaoEleitoral, candidatoUuid, sessao, zona, localdevotacao, email, celular, instagram,facebook, twitter, tiktok, endereco, complemento, cidade, codIbge, bairro, pais, uf, latitude, longitude } = req.body
  
         try {
           
@@ -76,6 +76,7 @@ export class UpdateEleitorController {
                 data: {
                     nomeCompleto: nomeCompleto,
                     nomeMae:nomeMae,
+                    sexo: sexo,
                     dataNascimento: aniversario,
                     candidatoUuid: candidatoUuid,
                     usuarioUuid: usuario,

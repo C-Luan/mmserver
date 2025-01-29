@@ -104,6 +104,7 @@ const updateAtendimento = new UpdateAtendimentoController
 const deleteAtendimento = new DeleteAtendimentoController
 router.post("/createatendimento", createAtendimento.handle)
 router.get("/readAtendimentosEleitor", readAtendimento.readAtendimentosEleitor)
+router.get("/readAtendimentosAll", readAtendimento.readAtendimentosAll)
 router.put("/updateAtendimentoEleitor", updateAtendimento.updateTarefa)
 router.delete("/deleteAtendimentoEleitor", deleteAtendimento.deleteTarefa)
 

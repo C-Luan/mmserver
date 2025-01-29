@@ -5,12 +5,12 @@ import logger from "../../winston";
 
 export class CreateAtendimentoController {
     async handle(req: Request, res: Response) {
-        const { descricao, responsavelUuid, tipoAtendimento, eleitorUuid } = req.body;
+        const { descricao, responsavelUuid, tipoAtendimento, dataatendimento, eleitorUuid, custo, } = req.body;
 
         if (!descricao || !responsavelUuid || !tipoAtendimento || !eleitorUuid) {
             logger.warn("Tentativa de criação com campos ausentes: %o", req.body);
-            return res.status(400).json({ 
-                message: "Campos obrigatórios ausentes: descrição, responsavelUuid, tipoAtendimento, eleitorUuid." 
+            return res.status(400).json({
+                message: "Campos obrigatórios ausentes: descrição, responsavelUuid, tipoAtendimento, eleitorUuid."
             });
         }
 
@@ -19,9 +19,11 @@ export class CreateAtendimentoController {
                 data: {
                     usuarioUuid: req.uuid,
                     responsavelUuid,
+                    dataatendimento,
                     tipoAtendimento,
                     eleitorUuid,
                     descricao,
+                    custo,
                 },
             });
 

@@ -53,44 +53,46 @@ model tipoAtendimento {
 }
 
 model atendimento {
-  uuid            String           @id @default(uuid())
+  uuid            String    @id @default(uuid())
   eleitorUuid     String
   usuarioUuid     String //Usuario que criou o atendimento
   responsavelUuid String // Usuário responsável pelo atendimento
-  custo           Float            @default(0)
-  created_at      DateTime         @default(now())
-  updated_at      DateTime?        @updatedAt
+  custo           Float     @default(0)
+  dataatendimento DateTime  @default(now())
+  created_at      DateTime  @default(now())
+  updated_at      DateTime? @updatedAt
   tipoAtendimento Int?
   descricao       String?
-  criado_por      Usuario          @relation("criadorAtendimento", fields: [usuarioUuid], references: [uuid])
-  responsavel     Usuario          @relation("responsavelAtendimento", fields: [responsavelUuid], references: [uuid])
-  eleitor         Eleitor          @relation(fields: [eleitorUuid], references: [uuid], onDelete: Cascade)
-  atendimento     tipoAtendimento? @relation(fields: [tipoAtendimento], references: [id])
+
+  criado_por  Usuario          @relation("criadorAtendimento", fields: [usuarioUuid], references: [uuid])
+  responsavel Usuario          @relation("responsavelAtendimento", fields: [responsavelUuid], references: [uuid])
+  eleitor     Eleitor          @relation(fields: [eleitorUuid], references: [uuid], onDelete: Cascade)
+  atendimento tipoAtendimento? @relation(fields: [tipoAtendimento], references: [id])
 }
 
 model Eleitor {
   uuid            String    @id @default(uuid())
   nomeCompleto    String
   nomeMae         String    @default("")
+  sexo            String    @default("MASCULINO")
   cpf             String
   rg              String
   coligacaoUuid   String?
   dataNascimento  DateTime?
-  indicadopor     String    @default("")
-  formiguinha     String?
+  indicado_por    String?
   candidatoUuid   String
   usuarioUuid     String?
   sessaoEleitoral Int?
   classificacaoId Int?
   created_at      DateTime  @default(now())
 
-  Formiguinha          Eleitor?               @relation("Formiguinhas", fields: [formiguinha], references: [uuid])
+  Formiguinha          Eleitor?               @relation("Formiguinhas", fields: [indicado_por], references: [uuid])
   sessaoeleitoral      LocalVotacao?          @relation(fields: [sessaoEleitoral], references: [uuid])
   criado_por           Usuario?               @relation(fields: [usuarioUuid], references: [uuid])
   candidato            Candidato              @relation(fields: [candidatoUuid], references: [uuid])
   classificacao        classificacao?         @relation(fields: [classificacaoId], references: [id])
   coligacao            coligacao?             @relation(fields: [coligacaoUuid], references: [uuid])
-  Formiguinhas         Eleitor[]              @relation("Formiguinhas")
+  Indicacoes           Eleitor[]              @relation("Formiguinhas")
   contatoEleitor       contatoEleitor[]
   MidiasSociaisEleitor MidiasSociaisEleitor[]
   DadosPessoaisEleitor DadosPessoaisEleitor[]
