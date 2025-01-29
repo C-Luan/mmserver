@@ -90,7 +90,6 @@ export class HomeScreenController {
                         classificacaoId: true,
                     }
                 })
-                console.log(totalELeitoresMap)
                 const countByClassificacaoId = totalELeitoresMap.reduce((acc, { classificacaoId, _count }) => {
                     const key = classificacaoId === null ? 'null' : classificacaoId;
                     acc[key] = _count.classificacaoId;
