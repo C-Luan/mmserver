@@ -18,7 +18,7 @@ export class CreateUserController {
           nomeCompleto: nomeCompleto,
           apelido: apelido,
           perfil: perfil,
-          coordenador: coordenador,
+          // coordenador: coordenador,
           login: {
             create: {
               email: email.toLowerCase().trim(),

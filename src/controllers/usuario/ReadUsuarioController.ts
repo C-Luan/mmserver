@@ -256,7 +256,6 @@ export class ReadUserController {
               uuidCandidato: 'asc'
             },
             where: {
-              coordenador: coordenadorStr,
               uuidCandidato: usuario.uuidCandidato,
             },
             include: {
