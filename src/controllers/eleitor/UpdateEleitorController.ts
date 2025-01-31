@@ -114,7 +114,7 @@ export class UpdateEleitorController {
                             data:{
                                 sessao:DadosPessoaisEleitor.sessao,
                                 zona:DadosPessoaisEleitor.zona,
-                               
+                           
                             }
                         }
                     },

@@ -73,7 +73,7 @@ router.get("/readlocalvotacaouf", readLocalVotacao.seachLocalVotacaoUf)
 router.get("/readlocalvotacaoonlyuf", readLocalVotacao.seachLocalVotacaoonlyUf)
 router.get("/searchLocalVotacaoonly", readLocalVotacao.searchLocalVotacaoonly)
 router.post("/createlocalvotacao", createLocaldeVotacao.createmany)
-
+router.post("/importlocalvotacao", createLocaldeVotacao.import)
 
 
 //endereco_local_votacao

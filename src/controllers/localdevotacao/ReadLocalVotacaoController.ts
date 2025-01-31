@@ -20,7 +20,7 @@ export class Readlocalvotacaocontroller {
         const locaisVotacao = await prismaClient.enderecoLocalVotacao.findMany({
           where: {
             uf: uf,
-            cidade: 'ANANINDEUA'
+
           },
           include: {
             LocalVotacao: {
@@ -45,7 +45,6 @@ export class Readlocalvotacaocontroller {
         const locaisVotacao = await prismaClient.enderecoLocalVotacao.findMany({
           where: {
             uf: uf,
-            cidade: 'ANANINDEUA'
           },
           include: {
             LocalVotacao: {

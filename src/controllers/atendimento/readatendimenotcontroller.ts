@@ -15,6 +15,7 @@ export class ReadAtendimentoController {
             const atendimentos = await prismaClient.atendimento.findMany({
                 orderBy: {
                     created_at: "desc"
+                    
                 },
                 where: {
                     eleitorUuid: eleitorUuid
@@ -34,9 +35,7 @@ export class ReadAtendimentoController {
 
             // Retornando os atendimentos encontrados
             return res.json(atendimentos);
-
         } catch (error) {
-            console.error("Erro ao buscar atendimentos:", error);
             return res.status(500).json({ error: "Erro interno do servidor." });
         }
     }
@@ -62,9 +61,14 @@ export class ReadAtendimentoController {
                         include:{
                             EnderecoEleitor:true,
                             DadosPessoaisEleitor:true,
-                            
+                            contatoEleitor:true,
+                            MidiasSociaisEleitor:true,
+                            classificacao:true,
+                            // candidato:true,
+                            // criado_por:true,
                         }
                     },
+                    responsavelUuid:true,
                     responsavel: true,
                     tipoAtendimento: true,
                     custo:true,

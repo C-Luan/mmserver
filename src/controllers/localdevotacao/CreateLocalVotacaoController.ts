@@ -11,8 +11,8 @@ interface localdevotacao {
     endereco: string;
     bairro: string;
     cep: number;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     eleitores: number;
 }
 export class CreateLocalVotacaoController {
@@ -31,14 +31,13 @@ export class CreateLocalVotacaoController {
             res.status(500).json({ message: "Falha Interna do servidor", error: error })
         }
     }
-    static async import(req: Request, res: Response) {
+     async import(req: Request, res: Response) {
         try {
             const municipios: localdevotacao[] = req.body;
 
             if (!Array.isArray(municipios)) {
                 return res.status(400).json({ error: "A lista enviada não é válida" });
             }
-
             // Inserindo os dados corretamente usando `Promise.all`
             await Promise.all(
                 municipios.map(async (local) => {
@@ -48,6 +47,18 @@ export class CreateLocalVotacaoController {
                             localdevotacao: local.nome,
                             numerotse: local.id_municipio_tse,
                             totalEleitores: local.eleitores,
+                            endereco:{
+                                create:{
+                                    latitude:local.latitude,
+                                    longitude:local.longitude,
+                                    bairro:local.bairro,
+                                    cep:local.cep,
+                                    cidade:local.id_municipio_nome,
+                                    endereco:local.endereco,
+                                    uf:"PA",
+                                    
+                                }
+                            }
                         },
                     });
                 })
