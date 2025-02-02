@@ -28,6 +28,8 @@ import { DeleteTarefasController as DeleteAtendimentoController } from "./contro
 import { ReadTipoAtendimento as ReadTipoAtendimentoController } from "./controllers/tipoatendimento/readtipoatendimento";
 import { CreateTipoAtendimento } from "./controllers/tipoatendimento/createtipoatendimento";
 import { UpdateTipoAtendimentoController } from "./controllers/tipoatendimento/updatetipoatendimento";
+import { CreateSessaoVotacaoController } from "./controllers/sessaovotacao/createsessaovotacao";
+import { ReadSessaoEleitoralController } from "./controllers/sessaovotacao/readsessaovotacao";
 
 const router = Router()
 
@@ -75,7 +77,11 @@ router.get("/searchLocalVotacaoonly", readLocalVotacao.searchLocalVotacaoonly)
 router.post("/createlocalvotacao", createLocaldeVotacao.createmany)
 router.post("/importlocalvotacao", createLocaldeVotacao.import)
 
-
+//secoes eleitorais
+const createSessaoEleitoral = new CreateSessaoVotacaoController
+const readSessaoEleitoral = new ReadSessaoEleitoralController
+router.post("/importsecaoeleitoral", createSessaoEleitoral.import)
+router.get("/getonlyLocalvotacao", readSessaoEleitoral.getonlyLocalVotacao)
 //endereco_local_votacao
 const createEnderecoLocaldeVotacao = new CreateEnderecoLocalVotacaoController
 router.post("/createenderecolocalvotacao", createEnderecoLocaldeVotacao.createmany)
@@ -103,7 +109,7 @@ const readAtendimento = new ReadAtendimentoController
 const updateAtendimento = new UpdateAtendimentoController
 const deleteAtendimento = new DeleteAtendimentoController
 router.post("/createatendimento", createAtendimento.handle)
-router.get("/readAtendimentosEleitor", readAtendimento.readAtendimentosEleitor)
+router.get("/readAtendimentosEleitor/:eleitorUuid", readAtendimento.readAtendimentosEleitor)
 router.get("/readAtendimentosAll", readAtendimento.readAtendimentosAll)
 router.put("/updateAtendimentoEleitor", updateAtendimento.updateTarefa)
 router.delete("/deleteAtendimentoEleitor", deleteAtendimento.deleteTarefa)

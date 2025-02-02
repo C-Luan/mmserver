@@ -48,7 +48,7 @@ model ContatoCandidato {
 
 model tipoAtendimento {
   id          Int           @id @default(autoincrement())
-  descricao   String
+  descricao   String @unique
   atendimento atendimento[]
 }
 
@@ -238,7 +238,6 @@ model SessoesEleitorais {
   localVotacaoUuid Int?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
-
   LocalVotacao LocalVotacao? @relation(fields: [localVotacaoUuid], references: [uuid])
 }
 

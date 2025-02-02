@@ -5,7 +5,7 @@ export class ReadAtendimentoController {
     async readAtendimentosEleitor(req: Request, res: Response) {
         try {
             const { eleitorUuid } = req.params;
-
+            console.log(eleitorUuid)
             // Validação para evitar requisições sem o UUID
             if (!eleitorUuid) {
                 return res.status(400).json({ error: "Eleitor UUID é obrigatório." });
@@ -15,7 +15,7 @@ export class ReadAtendimentoController {
             const atendimentos = await prismaClient.atendimento.findMany({
                 orderBy: {
                     created_at: "desc"
-                    
+
                 },
                 where: {
                     eleitorUuid: eleitorUuid
@@ -23,14 +23,14 @@ export class ReadAtendimentoController {
                 select: {
                     created_at: true,
                     atendimento: true,
+                    custo:true,
                     updated_at: true,
                     descricao: true,
                     criado_por: true,
                     responsavel: true,
                     tipoAtendimento: true
-                    
                 },
-             
+
             });
 
             // Retornando os atendimentos encontrados
@@ -41,39 +41,39 @@ export class ReadAtendimentoController {
     }
     async readAtendimentosAll(req: Request, res: Response) {
         try {
-          
 
-           
+
+
 
             // Buscando os atendimentos no banco de dados
             const atendimentos = await prismaClient.atendimento.findMany({
                 orderBy: {
                     created_at: "desc"
                 },
-      
+
                 select: {
                     created_at: true,
                     atendimento: true,
                     updated_at: true,
                     descricao: true,
                     criado_por: true,
-                    eleitor:{
-                        include:{
-                            EnderecoEleitor:true,
-                            DadosPessoaisEleitor:true,
-                            contatoEleitor:true,
-                            MidiasSociaisEleitor:true,
-                            classificacao:true,
+                    eleitor: {
+                        include: {
+                            EnderecoEleitor: true,
+                            DadosPessoaisEleitor: true,
+                            contatoEleitor: true,
+                            MidiasSociaisEleitor: true,
+                            classificacao: true,
                             // candidato:true,
                             // criado_por:true,
                         }
                     },
-                    responsavelUuid:true,
+                    responsavelUuid: true,
                     responsavel: true,
                     tipoAtendimento: true,
-                    custo:true,
+                    custo: true,
                 },
-             
+
             });
 
             // Retornando os atendimentos encontrados
