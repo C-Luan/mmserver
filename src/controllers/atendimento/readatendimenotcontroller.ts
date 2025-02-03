@@ -57,6 +57,7 @@ export class ReadAtendimentoController {
                     updated_at: true,
                     descricao: true,
                     criado_por: true,
+                    dataatendimento:true,
                     eleitor: {
                         include: {
                             EnderecoEleitor: true,
@@ -77,6 +78,7 @@ export class ReadAtendimentoController {
             });
 
             // Retornando os atendimentos encontrados
+        
             return res.json(atendimentos);
 
         } catch (error) {

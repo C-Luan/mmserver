@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import { prismaClient } from "../../database/prismaClient";
+import { ReadEleitorController } from "../eleitor/ReadEleitorController";
 export class HomeScreenController {
 
     async readHomeScreen(req: Request, res: Response) {
         try {
             // Data atual
             const now = new Date();
+            const mesAtual = now.getMonth() + 1; // getMonth() retorna de 0 a 11
+
             now.setHours(now.getHours() - 3);
             // Data de 7 dias atrás
             const sevenDaysAgo = new Date(now);
@@ -173,7 +176,20 @@ export class HomeScreenController {
                         classificacaoId: true,
                     }
                 })
-                console.log(totalELeitoresMap)
+                const aniversairantesMes = await prismaClient.eleitor.findMany({
+                    where: {
+                        dataNascimento: {
+                            not: null, // Evita erros se houver registros sem data de nascimento
+                        },
+                    },
+                });
+
+                // Filtra os registros para garantir que o mês de nascimento seja o atual
+                const aniversariantesFiltrados = aniversairantesMes.filter((eleitor) => {
+                    const dataNascimento = new Date(eleitor.dataNascimento as Date);
+                    return dataNascimento.getMonth() + 1 === mesAtual;
+                });
+
                 const countByClassificacaoId = totalELeitoresMap.reduce((acc, { classificacaoId, _count }) => {
                     const key = classificacaoId === null ? 'null' : classificacaoId;
                     acc[key] = _count.classificacaoId;
@@ -201,7 +217,8 @@ export class HomeScreenController {
                     eleitorsevenday: eleitorsevenDaysAgo.length,
                     cadastrosCountByDay: countByDay,
                     totalHoje: eleitorHoje.length,
-                    totalELeitoresMap: countByClassificacaoId
+                    totalELeitoresMap: countByClassificacaoId,
+                    aniversairantesMes: aniversariantesFiltrados.length
                 })
             }
         } catch (error) {

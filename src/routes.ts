@@ -30,6 +30,7 @@ import { CreateTipoAtendimento } from "./controllers/tipoatendimento/createtipoa
 import { UpdateTipoAtendimentoController } from "./controllers/tipoatendimento/updatetipoatendimento";
 import { CreateSessaoVotacaoController } from "./controllers/sessaovotacao/createsessaovotacao";
 import { ReadSessaoEleitoralController } from "./controllers/sessaovotacao/readsessaovotacao";
+import { DashboardScreenController } from "./controllers/dashboard/dashboardpanelcontroller";
 
 const router = Router()
 
@@ -98,10 +99,12 @@ router.get("/aniversariantes/:mes", readEleitor.getAniversariantes)
 router.put("/updateclassificacaocontato", updateEleitor.upsertclassificacaovoto)
 router.put("/updateonlyeleitor", updateEleitor.updateeleitor)
 router.delete("/deleteanyeleitor", deleteEletor.deleteVarios)
-//dashboard
+//dashboard home
 const readDashboart = new HomeScreenController
 router.get("/readhomedashboard", readDashboart.readHomeScreen)
-
+// dashboard painel
+const readDashboartPainel = new DashboardScreenController
+router.get("/readdashboardpainel", readDashboartPainel.read)
 // atendimento
 
 const createAtendimento = new CreateAtendimentoController

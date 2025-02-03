@@ -384,11 +384,26 @@ export class ReadEleitorController {
                         not: null,
                     },
                 },
-                select: {
-                    uuid: true,
-                    nomeCompleto: true,
-                    dataNascimento: true,
-                },
+              include:{
+                    criado_por: {
+                        include: {
+                            candidato: true
+                        }
+                    },
+                    candidato: true,
+                    classificacao: true,
+                    EnderecoEleitor: true,
+                    DadosPessoaisEleitor: true,
+                    contatoEleitor: true,
+                    MidiasSociaisEleitor: true,
+                    sessaoeleitoral: {
+                        include: {
+                            sessoesEleitorais: true,
+                            endereco: true,
+
+                        }
+                    }
+                }
             });
 
             // Filtra aniversariantes com base no mês fornecido
