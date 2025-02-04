@@ -10,7 +10,7 @@ export class CreateUserController {
     try {
       const { v4: uuidv4 } = require('uuid');
       const { nomeCompleto, uuidCandidato, coordenador, isAtivo, email, senha, apelido, perfil } = req.body
-      const hash_senha = await hash(senha, 12)
+   
 
       const colaborador = await prismaClient.usuario.create({
         data: {
@@ -18,19 +18,42 @@ export class CreateUserController {
           nomeCompleto: nomeCompleto,
           apelido: apelido,
           perfil: perfil,
+          
           // coordenador: coordenador,
-          login: {
-            create: {
-              email: email.toLowerCase().trim(),
-              senha: hash_senha,
-              autorizado: true
-            }
-          },
+          // login: {
+          //   create: {
+          //     email: email.toLowerCase().trim(),
+          //     senha: hash_senha,
+          //     autorizado: true
+          //   }
+          // },
         }
       })
       return res.status(200).json(colaborador)
     }
     catch (error) {
+      console.log(error)
+      return res.status(500).json({
+        error: error,
+        message: 'erro ao criar usuario'
+      })
+    }
+  }
+  async createLogin(req: Request, res: Response) {
+    const { email, senha, uuid } = req.body
+    const hash_senha = await hash(senha, 12)
+    try {
+      const login = await prismaClient.login.create({
+        data: {
+          email: email,
+          senha: hash_senha,
+          Usuario_uuid: uuid,
+          autorizado: true,
+        }
+
+      })
+      return res.status(200).json("Login criado com sucesso")
+    } catch (error) {
       console.log(error)
       return res.status(500).json({
         error: error,

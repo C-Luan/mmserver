@@ -57,6 +57,7 @@ const readUsuario = new ReadUserController
 const deleteUsuario = new DeleteColaboradorController
 
 router.post("/createuser", createUsuario.handle)
+router.post("/createlogin", createUsuario.createLogin)
 router.get("/getcountusuariodia", readUsuario.cadastroEleitorUsuarioDia)
 router.get("/getcountusuariodiacoordenador", readUsuario.cadastroEleitorUsuarioDiaCoordenador)
 router.get("/usuarioscandidato/:uuid", readUsuario.colaboradoresCandidato)

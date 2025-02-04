@@ -119,7 +119,12 @@ export class ReadUserController {
         include: {
           candidato: true,
           contato: true,
-          login: true,
+          login: {
+            select:{
+              autorizado: true,
+              email:true,
+            }
+          },
           EnderecoUsuario: true,
           Perfil: true,
 
