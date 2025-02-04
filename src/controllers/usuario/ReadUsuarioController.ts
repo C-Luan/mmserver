@@ -38,6 +38,7 @@ export class ReadUserController {
               sessaoeleitoral: true,
               MidiasSociaisEleitor: true,
               DadosPessoaisEleitor: true,
+atendimento:true,
 
             }
           },

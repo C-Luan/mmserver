@@ -35,7 +35,7 @@ function converterParaData(dataString: string) {
 }
 export class CreateEleitorController {
     async createEleitor(req: Request, res: Response) {
-        const { usuario, EnderecoEleitor, nomeMae, sexo, cpf, rg, MidiasSociaisEleitor, contatoEleitor, DadosPessoaisEleitor, nomeCompleto, dataNascimento, sessaoEleitoral, candidatoUuid, sessao, zona, localdevotacao, email, celular, instagram, facebook, twitter, tiktok, endereco, complemento, cidade, codIbge, bairro, pais, uf, latitude, longitude } = req.body
+        const { usuario, EnderecoEleitor, nomeMae, sexo, cpf, rg,indicadopor, MidiasSociaisEleitor, contatoEleitor, DadosPessoaisEleitor, nomeCompleto, dataNascimento, sessaoEleitoral, candidatoUuid, sessao, zona, localdevotacao, email, celular, instagram, facebook, twitter, tiktok, endereco, complemento, cidade, codIbge, bairro, pais, uf, latitude, longitude } = req.body
         try {
             const candidato = await prismaClient.candidato.findUnique({
                 where: {
@@ -58,7 +58,8 @@ export class CreateEleitorController {
                     rg: rg,
                     dataNascimento: aniversario,
                     candidatoUuid: candidatoUuid,
-                    usuarioUuid: usuario,
+                    indicado_por: indicadopor,
+                    usuarioUuid:usuario,
                     sessaoEleitoral: sessaoEleitoral,
                     coligacaoUuid: candidato?.coligacaoUuid,
                     EnderecoEleitor: {
