@@ -23,12 +23,25 @@ export class ReadAtendimentoController {
                 select: {
                     created_at: true,
                     atendimento: true,
-                    custo:true,
                     updated_at: true,
                     descricao: true,
                     criado_por: true,
+                    dataatendimento:true,
+                    eleitor: {
+                        include: {
+                            EnderecoEleitor: true,
+                            DadosPessoaisEleitor: true,
+                            contatoEleitor: true,
+                            MidiasSociaisEleitor: true,
+                            classificacao: true,
+                            // candidato:true,
+                            // criado_por:true,
+                        }
+                    },
+                    responsavelUuid: true,
                     responsavel: true,
-                    tipoAtendimento: true
+                    tipoAtendimento: true,
+                    custo: true,
                 },
 
             });
