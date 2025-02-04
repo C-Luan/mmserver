@@ -18,7 +18,7 @@ export class DeleteEleitorController {
             })
 
             // Verifica se o usuário tem permissão para deletar
-            if (usuario?.perfil == 1 || usuario?.perfil == 4) {
+            if (usuario?.perfil == 1 || usuario?.perfil == 4 ||usuario?.perfil == 2 || usuario?.perfil ==3) {
                 // Deletar eleitores em paralelo utilizando Promise.all
                 await Promise.all(data.map(async (element: { key: string }) => {
                     try {
