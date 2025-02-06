@@ -29,7 +29,8 @@ export class ReadEleitorController {
                     DadosPessoaisEleitor: true,
                     contatoEleitor: true,
                     MidiasSociaisEleitor: true,
-
+Indicacoes:true,
+Formiguinha:true,
                     sessaoeleitoral: {
 
                         include: {
@@ -80,7 +81,8 @@ export class ReadEleitorController {
                         },
                         candidato: true,
                         classificacao: true,
-                        EnderecoEleitor: true,
+                        EnderecoEleitor: true,Indicacoes:true,
+                        Formiguinha:true,
                         DadosPessoaisEleitor: true,
                         contatoEleitor: true,
                         MidiasSociaisEleitor: true,
@@ -115,7 +117,8 @@ export class ReadEleitorController {
                         classificacao: true,
                         EnderecoEleitor: true,
                         DadosPessoaisEleitor: true,
-                        contatoEleitor: true,
+                        contatoEleitor: true,Indicacoes:true,
+                        Formiguinha:true,
                         MidiasSociaisEleitor: true,
                         sessaoeleitoral: {
                             include: {
@@ -148,7 +151,8 @@ export class ReadEleitorController {
                         coligacao: true,
                         classificacao: true,
                         EnderecoEleitor: true,
-                        DadosPessoaisEleitor: true,
+                        DadosPessoaisEleitor: true,Indicacoes:true,
+                        Formiguinha:true,
                         contatoEleitor: true,
                         MidiasSociaisEleitor: true,
                         sessaoeleitoral: {
@@ -184,7 +188,8 @@ export class ReadEleitorController {
                         classificacao: true,
                         EnderecoEleitor: true,
                         DadosPessoaisEleitor: true,
-                        contatoEleitor: true,
+                        contatoEleitor: true,Indicacoes:true,
+                        Formiguinha:true,
                         MidiasSociaisEleitor: true,
                         sessaoeleitoral: {
                             include: {
@@ -240,7 +245,8 @@ export class ReadEleitorController {
                         },
                         candidato: true,
                         classificacao: true,
-                        EnderecoEleitor: true,
+                        EnderecoEleitor: true,Indicacoes:true,
+                        Formiguinha:true,
                         DadosPessoaisEleitor: true,
                         contatoEleitor: true,
                         MidiasSociaisEleitor: true,
@@ -273,7 +279,8 @@ export class ReadEleitorController {
                         candidato: true,
                         coligacao: true,
                         classificacao: true,
-                        EnderecoEleitor: true,
+                        EnderecoEleitor: true,Indicacoes:true,
+                        Formiguinha:true,
                         DadosPessoaisEleitor: true,
                         contatoEleitor: true,
                         MidiasSociaisEleitor: true,
@@ -308,7 +315,8 @@ export class ReadEleitorController {
                             }
                         },
                         candidato: true,
-                        classificacao: true,
+                        classificacao: true,Indicacoes:true,
+                        Formiguinha:true,
                         EnderecoEleitor: true,
                         DadosPessoaisEleitor: true,
                         contatoEleitor: true,
