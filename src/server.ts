@@ -1,6 +1,8 @@
 import express from "express";
 import { router } from "./routes"
+import dotenv from "dotenv";
 
+dotenv.config();
 
 var porta = process.env.PORT_APP || 3000
 const app = express()

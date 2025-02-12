@@ -31,6 +31,7 @@ import { UpdateTipoAtendimentoController } from "./controllers/tipoatendimento/u
 import { CreateSessaoVotacaoController } from "./controllers/sessaovotacao/createsessaovotacao";
 import { ReadSessaoEleitoralController } from "./controllers/sessaovotacao/readsessaovotacao";
 import { DashboardScreenController } from "./controllers/dashboard/dashboardpanelcontroller";
+import { consultarSituacaoEleitoral } from "./scraper";
 
 const router = Router()
 
@@ -41,7 +42,15 @@ router.post("/cadastrarcandidato", createCandidato.handle)
 const autenticacaoColaborador = new AuthColaboradorController
 const logout = new Logout
 router.post("/login", autenticacaoColaborador.login)
+router.get ("/consulta", async (req, res) => {
+    const { titulo } = req.query;
+    if (!titulo) {
+        return res.status(400).json({ error: "O título de eleitor é obrigatório." });
+    }
 
+    const resultado = await consultarSituacaoEleitoral(String(titulo));
+    res.status(200).json({ titulo, situacao: resultado });
+})
 //////////////////////////////////////////////////////////////////////////////////////
 router.use(AuthMiddleware)
 
