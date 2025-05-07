@@ -18,6 +18,9 @@ export class ReadUserController {
         },
 
         include: {
+          atendimento: true,
+          coligacao: true,
+
           candidato: true,
           contato: true,
           EnderecoUsuario: true,
@@ -30,15 +33,33 @@ export class ReadUserController {
           },
           Eleitor: {
             include: {
-              EnderecoEleitor: true,
-              candidato: true,
-              classificacao: true,
-              contatoEleitor: true,
-              criado_por: true,
-              sessaoeleitoral: true,
-              MidiasSociaisEleitor: true,
-              DadosPessoaisEleitor: true,
-atendimento:true,
+              criado_por: {
+                include: {
+                    candidato: true
+                }
+            },
+            candidato: {
+                include: {
+                    coligacao: true,
+                }
+            },
+            classificacao: true,
+            EnderecoEleitor: true,
+
+            DadosPessoaisEleitor: true,
+            contatoEleitor: true,
+            MidiasSociaisEleitor: true,
+Indicacoes:true,
+Formiguinha:true,
+            sessaoeleitoral: {
+
+                include: {
+
+                    sessoesEleitorais: true,
+                    endereco: true,
+
+                }
+            }
 
             }
           },
@@ -121,9 +142,9 @@ atendimento:true,
           candidato: true,
           contato: true,
           login: {
-            select:{
+            select: {
               autorizado: true,
-              email:true,
+              email: true,
             }
           },
           EnderecoUsuario: true,
@@ -240,7 +261,7 @@ atendimento:true,
     // Converta os parâmetros para os tipos corretos, se necessário
     const coordenadorStr: string = coordenador.toString();
     const dataStr: string = data.toString();
-    console.log(coordenadorStr + ' ' + data )
+    console.log(coordenadorStr + ' ' + data)
     const usuario = await prismaClient.usuario.findUnique({
       where: {
         uuid: uuid
@@ -255,30 +276,30 @@ atendimento:true,
       }
     })
     try {
-        const now = new Date(dataStr);
-        if (usuario?.perfil == 1 || usuario?.perfil == 2 || usuario?.perfil == 5 || usuario?.perfil==4) {
-          const colaborador = await prismaClient.usuario.findMany({
-            orderBy: {
-              uuidCandidato: 'asc'
-            },
-            where: {
-              uuidCandidato: usuario.uuidCandidato,
-            },
-            include: {
-              candidato: true,
-              Eleitor: {
-                where: {
-                  created_at: {
-                    gte: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-                  }
-                },
-              }
+      const now = new Date(dataStr);
+      if (usuario?.perfil == 1 || usuario?.perfil == 2 || usuario?.perfil == 5 || usuario?.perfil == 4) {
+        const colaborador = await prismaClient.usuario.findMany({
+          orderBy: {
+            uuidCandidato: 'asc'
+          },
+          where: {
+            uuidCandidato: usuario.uuidCandidato,
+          },
+          include: {
+            candidato: true,
+            Eleitor: {
+              where: {
+                created_at: {
+                  gte: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+                }
+              },
             }
-          })
-          return res.status(200).json(colaborador)
-        }else{
-          return res.status(401).json('Usuario nao autorizado!')
-        }
+          }
+        })
+        return res.status(200).json(colaborador)
+      } else {
+        return res.status(401).json('Usuario nao autorizado!')
+      }
 
     } catch (error) {
       console.log(error)
