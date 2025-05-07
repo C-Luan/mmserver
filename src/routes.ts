@@ -32,6 +32,7 @@ import { CreateSessaoVotacaoController } from "./controllers/sessaovotacao/creat
 import { ReadSessaoEleitoralController } from "./controllers/sessaovotacao/readsessaovotacao";
 import { DashboardScreenController } from "./controllers/dashboard/dashboardpanelcontroller";
 import { consultarSituacaoEleitoral } from "./scraper";
+import { UploadDocumentos } from "./controllers/documentosuploads/uploads_documentos";
 
 const router = Router()
 
@@ -136,5 +137,13 @@ router.post("/tipo-atendimento", createtipoatendimento.create);
 router.get("/tipo-atendimento", readTipoAtendimento.findAll);
 router.get("/tipo-atendimento/:id", readTipoAtendimento.findOne);
 router.put("/tipo-atendimento/:id", updateTipoAtendimento.update);
+
+// Uploads de documentos do eleitor
+router.post("/upload/foto-perfil/:eleitorId", UploadDocumentos.uploadFotoPerfil);
+router.post("/upload/certidao-nascimento/:eleitorId", UploadDocumentos.uploadCertidaoNascimento);
+router.post("/upload/cartao-sus/:eleitorId", UploadDocumentos.uploadCartaoSUS);
+router.post("/upload/rg-frente/:eleitorId", UploadDocumentos.uploadRgFrente);
+router.post("/upload/rg-costa/:eleitorId", UploadDocumentos.uploadRgCosta);
+router.post("/upload/comprovante-residencia/:eleitorId", UploadDocumentos.uploadComprovanteResidencia);
 
 export { router }

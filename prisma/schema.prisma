@@ -85,7 +85,13 @@ model Eleitor {
   sessaoEleitoral Int?
   classificacaoId Int?
   created_at      DateTime  @default(now())
-
+  fotoperfil            String?
+  certidaoNascimento    String?
+  cartaosus             String?
+  rgFrente              String?
+  rgCosta               String?
+  comprovanteResidencia String?
+  
   Formiguinha          Eleitor?               @relation("Formiguinhas", fields: [indicado_por], references: [uuid])
   sessaoeleitoral      LocalVotacao?          @relation(fields: [sessaoEleitoral], references: [uuid])
   criado_por           Usuario?               @relation(fields: [usuarioUuid], references: [uuid])

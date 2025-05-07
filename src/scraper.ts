@@ -3,7 +3,7 @@ import puppeteer from "puppeteer";
 const URL = "https://www.tse.jus.br/servicos-eleitorais/autoatendimento-eleitoral#/atendimento-eleitor";
 
 export async function consultarSituacaoEleitoral(titulo: string) {
-    const browser = await puppeteer.launch({ headless: true,slowMo:100 });
+    const browser = await puppeteer.launch({ headless: false,slowMo:100 });
     const page = await browser.newPage();
 
     try {
