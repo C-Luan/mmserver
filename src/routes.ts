@@ -35,6 +35,7 @@ import { ReadSessaoEleitoralController } from "./controllers/sessaovotacao/reads
 import { DashboardScreenController } from "./controllers/dashboard/dashboardpanelcontroller";
 import { consultarSituacaoEleitoral } from "./scraper";
 import { UploadDocumentos } from "./controllers/documentosuploads/uploads_documentos";
+import { UploadDocumentosUsuario } from "./controllers/docoumentoliredanca/uploads_documentos";
 
 const router = Router()
 
@@ -59,7 +60,8 @@ router.use(AuthMiddleware)
 
 router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 router.get("/get-file-link/:eleitorId/:fileType", UploadDocumentos.getFileLink);
-
+router.use('/uploadsusuario', express.static(path.join(__dirname, '../uploadsusuario')));
+router.get("/get-file-linkusuario/:usuarioId/:fileType", UploadDocumentosUsuario.getFileLink);
 
 //login
 const atualizaLogin = new UpdateLoginController
@@ -151,5 +153,10 @@ router.post("/upload/rg-frente/:eleitorId", UploadDocumentos.uploadRgFrente);
 router.post("/upload/rg-costa/:eleitorId", UploadDocumentos.uploadRgCosta);
 router.post("/upload/comprovante-residencia/:eleitorId", UploadDocumentos.uploadComprovanteResidencia);
 
-
+router.post("/uploadsusuario/foto-perfil/:usuarioId", UploadDocumentos.uploadFotoPerfil);
+router.post("/uploadsusuario/certidao-nascimento/:usuarioId", UploadDocumentos.uploadCertidaoNascimento);
+router.post("/uploadsusuario/cartao-sus/:usuarioId", UploadDocumentos.uploadCartaoSUS);
+router.post("/uploadsusuario/rg-frente/:usuarioId", UploadDocumentos.uploadRgFrente);
+router.post("/uploadsusuario/rg-costa/:usuarioId", UploadDocumentos.uploadRgCosta);
+router.post("/uploadsusuario/comprovante-residencia/:usuarioId", UploadDocumentos.uploadComprovanteResidencia);
 export { router }
