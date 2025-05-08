@@ -1,4 +1,6 @@
 import { Router } from "express";
+import express from "express"
+import path from "path";
 import { AuthColaboradorController } from './controllers/auth/AuthController';
 import { AuthMiddleware } from './middlewares/auth';
 import { UpdateLoginController } from './controllers/auth/UpdateLoginController';
@@ -54,6 +56,9 @@ router.get ("/consulta", async (req, res) => {
 })
 //////////////////////////////////////////////////////////////////////////////////////
 router.use(AuthMiddleware)
+
+router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+router.get("/get-file-link/:eleitorId/:fileType", UploadDocumentos.getFileLink);
 
 
 //login
@@ -145,5 +150,6 @@ router.post("/upload/cartao-sus/:eleitorId", UploadDocumentos.uploadCartaoSUS);
 router.post("/upload/rg-frente/:eleitorId", UploadDocumentos.uploadRgFrente);
 router.post("/upload/rg-costa/:eleitorId", UploadDocumentos.uploadRgCosta);
 router.post("/upload/comprovante-residencia/:eleitorId", UploadDocumentos.uploadComprovanteResidencia);
+
 
 export { router }
