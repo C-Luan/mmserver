@@ -11,25 +11,25 @@ interface EnderecoEleitor {
     uf: string;
     latitude?: number;
     longitude?: number;
-  }
-  interface MidiasSociaisEleitor {
-    uuid: string;        
-    instagram?: string;   
-    facebook?: string;  
-    twitter?: string;  
-    tiktok?: string;     
-  }
-  interface   DadosPessoaisEleitor {
+}
+interface MidiasSociaisEleitor {
+    uuid: string;
+    instagram?: string;
+    facebook?: string;
+    twitter?: string;
+    tiktok?: string;
+}
+interface DadosPessoaisEleitor {
     uuid: string;             // Identificador único
     sessao: string;           // Sessão de votação
     zona: string;             // Zona eleitoral
     localdevotacao: string;   // Local de votação
-  }
-  interface contatoEleitor {
+}
+interface contatoEleitor {
     uuid: string;      // Identificador único
     email: string;     // Email do eleitor
     celular: string;   // Número de celular do eleitor
-  }
+}
 export class UpdateEleitorController {
     async upsertclassificacaovoto(req: Request, res: Response) {
         const { uuid, classificacaoId } = req.body
@@ -54,15 +54,15 @@ export class UpdateEleitorController {
         }
     }
     async updateeleitor(req: Request, res: Response) {
-        const { uuid,usuario,sexo, EnderecoEleitor: EnderecoEleitor,MidiasSociaisEleitor: MidiasSociaisEleitor, contatoEleitor:contatoEleitor, DadosPessoaisEleitor:DadosPessoaisEleitor, nomeCompleto, nomeMae, dataNascimento, sessaoEleitoral, candidatoUuid, sessao, zona, localdevotacao, email, celular, instagram,facebook, twitter, tiktok, endereco, complemento, cidade, codIbge, bairro, pais, uf, latitude, longitude } = req.body
- 
+        const { uuid, usuario, sexo, EnderecoEleitor: EnderecoEleitor, MidiasSociaisEleitor: MidiasSociaisEleitor, contatoEleitor: contatoEleitor, DadosPessoaisEleitor: DadosPessoaisEleitor, nomeCompleto, nomeMae, dataNascimento, sessaoEleitoral, nCartaoSus, candidatoUuid, } = req.body
+
         try {
-          
-            var aniversario ;
-            if(dataNascimento == null){
-            aniversario = null
-            }else{
-        aniversario = new Date(dataNascimento)
+
+            var aniversario;
+            if (dataNascimento == null) {
+                aniversario = null
+            } else {
+                aniversario = new Date(dataNascimento)
             }
             const candidato = await prismaClient.candidato.findUnique({
                 where: {
@@ -75,62 +75,63 @@ export class UpdateEleitorController {
                 },
                 data: {
                     nomeCompleto: nomeCompleto,
-                    nomeMae:nomeMae,
+                    nomeMae: nomeMae,
                     sexo: sexo,
                     dataNascimento: aniversario,
                     candidatoUuid: candidatoUuid,
                     usuarioUuid: usuario,
                     sessaoEleitoral: sessaoEleitoral,
+                    nCartaoSus: nCartaoSus,
                     coligacaoUuid: candidato?.coligacaoUuid,
-                    MidiasSociaisEleitor:{
-                        update:{
-                            where:{
-                                uuid:MidiasSociaisEleitor.uuid,
-                            },data:{
-                                instagram:MidiasSociaisEleitor.instagram,
-                                facebook:MidiasSociaisEleitor.facebook,
-                                twitter:MidiasSociaisEleitor.twitter,
-                                tiktok:MidiasSociaisEleitor.tiktok,
+                    MidiasSociaisEleitor: {
+                        update: {
+                            where: {
+                                uuid: MidiasSociaisEleitor.uuid,
+                            }, data: {
+                                instagram: MidiasSociaisEleitor.instagram,
+                                facebook: MidiasSociaisEleitor.facebook,
+                                twitter: MidiasSociaisEleitor.twitter,
+                                tiktok: MidiasSociaisEleitor.tiktok,
                             }
                         }
                     },
-                    contatoEleitor:{
-                        update:{
-                            where:{
+                    contatoEleitor: {
+                        update: {
+                            where: {
                                 uuid: contatoEleitor.uuid,
 
                             },
-                            data:{
-                                email:contatoEleitor.email,
-                                celular:contatoEleitor.celular,
+                            data: {
+                                email: contatoEleitor.email,
+                                celular: contatoEleitor.celular,
                             }
                         }
                     },
-                    DadosPessoaisEleitor:{
-                        update:{
-                            where:{
+                    DadosPessoaisEleitor: {
+                        update: {
+                            where: {
                                 uuid: DadosPessoaisEleitor.uuid,
                             },
-                            data:{
-                                sessao:DadosPessoaisEleitor.sessao,
-                                zona:DadosPessoaisEleitor.zona,
-                           
+                            data: {
+                                sessao: DadosPessoaisEleitor.sessao,
+                                zona: DadosPessoaisEleitor.zona,
+
                             }
                         }
                     },
-                    EnderecoEleitor:{
-                        update:{
-                            where:{
-                                uuid:EnderecoEleitor.uuid,
+                    EnderecoEleitor: {
+                        update: {
+                            where: {
+                                uuid: EnderecoEleitor.uuid,
                             },
-                            data:{
-                                endereco:EnderecoEleitor.endereco,
-                                cidade:EnderecoEleitor.cidade,
-                                complemento:EnderecoEleitor.complemento,
-                                bairro:EnderecoEleitor.bairro,
-                                nCasa:EnderecoEleitor.nCasa,
-                                cep:EnderecoEleitor.cep,
-                                uf:EnderecoEleitor.uf,
+                            data: {
+                                endereco: EnderecoEleitor.endereco,
+                                cidade: EnderecoEleitor.cidade,
+                                complemento: EnderecoEleitor.complemento,
+                                bairro: EnderecoEleitor.bairro,
+                                nCasa: EnderecoEleitor.nCasa,
+                                cep: EnderecoEleitor.cep,
+                                uf: EnderecoEleitor.uf,
                             }
                         }
                     }
@@ -147,7 +148,4 @@ export class UpdateEleitorController {
             })
         }
     }
-}
-interface EnderecoEleitor {
-
 }

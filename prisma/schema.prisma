@@ -77,6 +77,8 @@ model Eleitor {
   sexo                  String    @default("MASCULINO")
   cpf                   String
   rg                    String
+  nCartaoSus            String?
+  lideranca            String?
   coligacaoUuid         String?
   dataNascimento        DateTime?
   indicado_por          String?
@@ -278,13 +280,13 @@ model classificacao {
 
 // dados operadores 
 model Usuario {
-  uuid                    String               @id @default(uuid())
+  uuid                    String   @id @default(uuid())
   nomeCompleto            String
   apelido                 String?
-  isAtivo                 Boolean              @default(true)
+  isAtivo                 Boolean  @default(true)
   uuidCandidato           String
-  created_at              DateTime             @default(now())
-  updated_at              DateTime             @updatedAt
+  created_at              DateTime @default(now())
+  updated_at              DateTime @updatedAt
   perfil                  Int
   dadosContatoUsuarioUuid String?
   fotoperfil              String?
@@ -293,17 +295,17 @@ model Usuario {
   rgFrente                String?
   rgCosta                 String?
   comprovanteResidencia   String?
-  
-  Perfil                  perfilUso            @relation(fields: [perfil], references: [id])
-  candidato               Candidato            @relation(fields: [uuidCandidato], references: [uuid])
-  login                   login[]
-  contato                 DadosContatoUsuario? @relation(fields: [dadosContatoUsuarioUuid], references: [uuid])
-  EnderecoUsuario         EnderecoUsuario?     @relation(fields: [enderecoUsuarioUuid], references: [uuid])
-  enderecoUsuarioUuid     String?
-  Eleitor                 Eleitor[]
-  coligacao               coligacao[]
-  atendimentoCriado       atendimento[]        @relation("criadorAtendimento")
-  atendimento             atendimento[]        @relation("responsavelAtendimento")
+
+  Perfil              perfilUso            @relation(fields: [perfil], references: [id])
+  candidato           Candidato            @relation(fields: [uuidCandidato], references: [uuid])
+  login               login[]
+  contato             DadosContatoUsuario? @relation(fields: [dadosContatoUsuarioUuid], references: [uuid])
+  EnderecoUsuario     EnderecoUsuario?     @relation(fields: [enderecoUsuarioUuid], references: [uuid])
+  enderecoUsuarioUuid String?
+  Eleitor             Eleitor[]
+  coligacao           coligacao[]
+  atendimentoCriado   atendimento[]        @relation("criadorAtendimento")
+  atendimento         atendimento[]        @relation("responsavelAtendimento")
 }
 
 model DadosContatoUsuario {
